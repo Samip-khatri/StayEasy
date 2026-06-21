@@ -1,0 +1,22 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import LandingPage from './pages/LandingPage'
+import Login from './pages/Login'
+import Signup from './pages/Signup'
+import BecomeAHost from './pages/BecomeAHost'
+import Navbar from './components/Navbar'
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/become-a-host" element={<BecomeAHost />} />
+      </Routes>
+    </BrowserRouter>
+  )
+}
+
+export default App
