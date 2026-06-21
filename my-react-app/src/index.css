@@ -6,6 +6,19 @@
   --color-success: #1E8449;
   --color-warning: #D35400;
   --color-danger: #C0392B;
+  --color-green-deep: #1B3A2F;
+  --color-green-mid: #2F5544;
+  --color-sand: #F3E9D7;
+  --color-sand-light: #FAF4E8;
+  --color-terracotta: #C8693F;
+  --color-terracotta-dark: #A8512F;
+  --color-charcoal: #2A2622;
+  --color-gold: #D4A857;
+  --color-line: #D9CCAE;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
@@ -14,4 +27,9 @@ body {
 
 h1, h2, h3, h4 {
   font-family: 'Playfair Display', serif;
+}
+
+@keyframes scroll-strip {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }

@@ -32,7 +32,7 @@ function Navbar() {
       initial={{ y: -80 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5, ease: 'easeOut' }}
-      className="flex justify-between items-center px-6 py-2 bg-white/20 backdrop-blur-lg sticky top-0 z-50"
+      className="flex justify-between items-center px-6 py-2 bg-white/20 backdrop-blur-lg sticky top-0 z-50 will-change-transform"
     >
       <Link to="/" className="no-underline flex items-center gap-2">
         <img src="/src/assets/d6848cec-6bfa-444c-9d51-23d2b0afbb40.jpg" alt="StayEasy" className="h-8 w-auto" />
@@ -45,7 +45,7 @@ function Navbar() {
         </select>
 
         <Link
-          to="/login?host=true"
+          to="/host"
           className="no-underline text-black font-medium px-4 py-2.5 rounded-full text-sm hover:bg-gray-100 transition-colors"
         >
           Become a Host
