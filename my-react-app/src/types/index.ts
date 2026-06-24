@@ -3,6 +3,15 @@ export interface User {
   first_name: string
   last_name: string
   email: string
+  firstName?: string
+  lastName?: string
+  name?: string
+  role?: string
+  avatar?: string
+  countryFlag?: string
+  country?: string
+  phone?: string
+  joinedDate?: string
 }
 
 export interface AuthState {

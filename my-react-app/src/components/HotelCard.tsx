@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Heart, Star } from "lucide-react";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 
 interface HotelCardProps {
   id: number;

@@ -12,6 +12,15 @@ interface AuthContextValue {
 
 const AuthContext = createContext<AuthContextValue | null>(null)
 
+function mapUser(u: User): User {
+  return {
+    ...u,
+    firstName: u.firstName || u.first_name,
+    lastName: u.lastName || u.last_name,
+    name: u.name || `${u.first_name || ''} ${u.last_name || ''}`.trim() || u.email,
+  }
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [token, setToken] = useState<string | null>(localStorage.getItem('token'))
@@ -22,7 +31,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const { data } = await api.get<User>('/v1/api/me', {
         headers: { Authorization: `Bearer ${authToken}` }
       })
-      setUser(data)
+      setUser(mapUser(data))
     } catch {
       localStorage.removeItem('token')
       setToken(null)

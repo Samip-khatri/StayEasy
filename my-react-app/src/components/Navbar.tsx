@@ -1,104 +1,184 @@
-import { useState, useRef, useEffect } from 'react'
-import { useNavigate, Link, useLocation } from 'react-router-dom'
-import { motion } from 'framer-motion'
-import { useAuth } from '../context/AuthContext'
+import { useState, useRef, useEffect } from "react";
+import { Search, ChevronDown, LogOut, LayoutDashboard, User, Settings } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { CountryCurrencyPicker } from "./CountryCurrencyPicker";
+import { Logo } from "./Logo";
+import { useAuth } from "../context/AuthContext";
+
+const dashboardPaths: Record<string, string> = {
+  superadmin:   "/dashboard/superadmin",
+  admin:        "/dashboard/admin",
+  manager:      "/dashboard/manager",
+  receptionist: "/dashboard/receptionist",
+  guest:        "/dashboard/guest",
+};
 
 export function Navbar() {
-  const { pathname } = useLocation()
-  const navigate = useNavigate()
-  const { user, logout } = useAuth()
-  const [dropdownOpen, setDropdownOpen] = useState(false)
-  const dropdownRef = useRef<HTMLDivElement>(null)
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setDropdownOpen(false)
-      }
-    }
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [])
+    const h = (e: MouseEvent) => { if (menuRef.current && !menuRef.current.contains(e.target as Node)) setMenuOpen(false); };
+    document.addEventListener("mousedown", h);
+    return () => document.removeEventListener("mousedown", h);
+  }, []);
 
-  if (pathname === '/become-a-host' || pathname === '/host/portal') return null
-
-  const handleLogout = () => {
-    logout()
-    navigate('/')
-  }
+  const firstName = user && (user.firstName || user.first_name);
+  const lastName = user && (user.lastName || user.last_name);
+  const displayName = firstName || user?.email?.split("@")[0] || "";
+  const userEmail = user?.email || "";
+  const userRole = user?.role || "guest";
 
   return (
-    <motion.nav
-      initial={{ y: -80 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5, ease: 'easeOut' }}
-      className="flex justify-between items-center px-6 py-2 bg-white/20 backdrop-blur-lg sticky top-0 z-50 will-change-transform"
-    >
-      <Link to="/" className="no-underline flex items-center gap-2">
-        <img src="/src/assets/d6848cec-6bfa-444c-9d51-23d2b0afbb40.jpg" alt="StayEasy" className="h-8 w-auto" />
-        <h2 className="text-primary m-0 text-2xl font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>StayEasy</h2>
-      </Link>
+    <header className="sticky top-0 z-50 bg-white border-b border-border shadow-sm">
+      <div className="max-w-[1280px] mx-auto px-6 h-[68px] flex items-center justify-between gap-4">
 
-      <div className="flex items-center gap-3">
-        <select className="text-sm bg-transparent border-none cursor-pointer outline-none text-gray-700">
-          <option>🇮🇳 INR</option>
-        </select>
+        <Link to="/" className="shrink-0"><Logo size={34} /></Link>
 
-        <Link
-          to="/host"
-          className="no-underline text-black font-medium px-4 py-2.5 rounded-full text-sm hover:bg-gray-100 transition-colors"
+        <div
+          className="hidden md:flex items-center border rounded-full shadow-sm hover:shadow-md transition-shadow cursor-pointer bg-white divide-x"
+          style={{ borderColor: "var(--border)", divideColor: "var(--border)" }}
         >
-          Become a Host
-        </Link>
-
-        <div ref={dropdownRef} className="relative">
-          <button
-            onClick={() => setDropdownOpen(!dropdownOpen)}
-            className="flex items-center gap-2 px-3 py-2 border border-gray-300 rounded-full bg-white cursor-pointer text-sm hover:shadow-md transition-shadow"
-          >
-            <span>☰</span>
-            <span className="w-[30px] h-[30px] rounded-full bg-gray-500 flex items-center justify-center text-white text-base">
-              {user ? user.first_name[0].toUpperCase() : '👤'}
+          <button className="px-5 py-2.5 text-sm font-medium rounded-l-full transition-colors hover:bg-accent" style={{ color: "var(--foreground)" }}>Anywhere</button>
+          <button className="px-5 py-2.5 text-sm font-medium transition-colors hover:bg-accent" style={{ color: "var(--foreground)" }}>Any week</button>
+          <button className="flex items-center gap-3 pl-5 pr-2 py-2 rounded-r-full transition-colors hover:bg-accent" style={{ color: "var(--foreground)" }}>
+            <span className="text-sm" style={{ color: "var(--muted-foreground)" }}>Add guests</span>
+            <span className="p-2 rounded-full" style={{ backgroundColor: "var(--primary)" }}>
+              <Search size={13} color="white" />
             </span>
           </button>
+        </div>
 
-          {dropdownOpen && (
-            <div className="absolute right-0 top-[50px] bg-white border border-gray-300 rounded-xl shadow-lg w-[220px] z-50 overflow-hidden">
+        <div className="flex items-center gap-1 shrink-0">
+          <CountryCurrencyPicker />
+
+          <Link
+            to="/become-a-host"
+            className="hidden md:block px-4 py-2 text-sm font-medium rounded-full transition-colors hover:bg-accent whitespace-nowrap"
+            style={{ color: "var(--foreground)" }}
+          >
+            Become a Host
+          </Link>
+
+          <div ref={menuRef} className="relative ml-1">
+            <button
+              onClick={() => setMenuOpen(v => !v)}
+              className="flex items-center gap-2 border rounded-full px-3 py-2 hover:shadow-md transition-shadow bg-white"
+              style={{ borderColor: "var(--border)" }}
+            >
               {user ? (
                 <>
-                  <div className="px-4 py-4 border-b border-gray-200">
-                    <p className="m-0 font-semibold">{user.first_name} {user.last_name}</p>
-                    <p className="m-0 mt-1 text-gray-500 text-xs">{user.email}</p>
-                  </div>
-                  <div
-                    onClick={handleLogout}
-                    className="px-4 py-3.5 cursor-pointer text-sm hover:bg-gray-100 transition-colors"
-                  >
-                    Log out
-                  </div>
+                  <img src={user.avatar || ""} alt={displayName} className="w-7 h-7 rounded-full object-cover" />
+                  <span className="hidden sm:flex items-center gap-1.5 text-sm font-semibold max-w-[120px] truncate" style={{ color: "var(--brand-dark)" }}>
+                    {user.countryFlag && <span className="text-base leading-none">{user.countryFlag}</span>}
+                    {displayName}
+                  </span>
+                  <ChevronDown size={13} className={`transition-transform ${menuOpen ? "rotate-180" : ""}`} style={{ color: "var(--muted-foreground)" }} />
                 </>
               ) : (
                 <>
-                  <div
-                    onClick={() => navigate('/signup')}
-                    className="px-4 py-3.5 cursor-pointer font-semibold text-sm hover:bg-gray-100 transition-colors"
-                  >
-                    Sign up
+                  <div className="w-7 h-7 rounded-full flex items-center justify-center" style={{ backgroundColor: "var(--muted)" }}>
+                    <User size={15} style={{ color: "var(--muted-foreground)" }} />
                   </div>
-                  <div
-                    onClick={() => navigate('/login')}
-                    className="px-4 py-3.5 cursor-pointer text-sm hover:bg-gray-100 transition-colors"
-                  >
-                    Log in
-                  </div>
+                  <span className="hidden sm:block text-sm font-medium" style={{ color: "var(--foreground)" }}>Account</span>
+                  <ChevronDown size={13} className={`transition-transform ${menuOpen ? "rotate-180" : ""}`} style={{ color: "var(--muted-foreground)" }} />
                 </>
               )}
-            </div>
-          )}
+            </button>
+
+            {menuOpen && (
+              <div className="absolute top-full right-0 mt-2 w-60 bg-white rounded-xl shadow-2xl border overflow-hidden z-50" style={{ borderColor: "var(--border)" }}>
+                {user ? (
+                  <>
+                    <div className="px-4 py-4 border-b" style={{ borderColor: "var(--border)", backgroundColor: "var(--accent)" }}>
+                      <div className="flex items-center gap-3">
+                        <img src={user.avatar || ""} alt={displayName} className="w-12 h-12 rounded-full object-cover border-2" style={{ borderColor: "var(--primary)" }} />
+                        <div className="min-w-0">
+                          <p className="font-bold truncate" style={{ color: "var(--brand-dark)", fontSize: "1rem" }}>
+                            {displayName}
+                            {lastName ? ` ${lastName}` : ""}
+                          </p>
+                          <p className="text-xs truncate" style={{ color: "var(--muted-foreground)" }}>{userEmail}</p>
+                          {user.countryFlag && user.country && (
+                            <p className="text-xs flex items-center gap-1 mt-0.5" style={{ color: "var(--primary)" }}>
+                              <span>{user.countryFlag}</span>
+                              <span>{user.country}</span>
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                      <span
+                        className="inline-block mt-2.5 text-xs font-semibold px-2.5 py-0.5 rounded-full capitalize text-white"
+                        style={{ backgroundColor: "var(--primary)" }}
+                      >
+                        {userRole}
+                      </span>
+                    </div>
+
+                    <div className="py-1">
+                      <button
+                        onClick={() => { navigate(dashboardPaths[userRole] || "/dashboard/guest"); setMenuOpen(false); }}
+                        className="w-full flex items-center gap-3 px-4 py-2.5 text-sm transition-colors hover:bg-accent"
+                        style={{ color: "var(--foreground)" }}
+                      >
+                        <LayoutDashboard size={15} style={{ color: "var(--primary)" }} />
+                        Dashboard
+                      </button>
+                      <button
+                        onClick={() => { navigate("/dashboard/guest"); setMenuOpen(false); }}
+                        className="w-full flex items-center gap-3 px-4 py-2.5 text-sm transition-colors hover:bg-accent"
+                        style={{ color: "var(--foreground)" }}
+                      >
+                        <Settings size={15} style={{ color: "var(--muted-foreground)" }} />
+                        Profile & Bookings
+                      </button>
+                      <div className="my-1 border-t" style={{ borderColor: "var(--border)" }} />
+                      <button
+                        onClick={() => { logout(); navigate("/"); setMenuOpen(false); }}
+                        className="w-full flex items-center gap-3 px-4 py-2.5 text-sm transition-colors hover:bg-accent"
+                        style={{ color: "var(--foreground)" }}
+                      >
+                        <LogOut size={15} style={{ color: "var(--muted-foreground)" }} />
+                        Sign out
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <div className="py-1">
+                    <Link to="/login" onClick={() => setMenuOpen(false)}
+                      className="flex px-4 py-3 text-sm font-bold transition-colors hover:bg-accent"
+                      style={{ color: "var(--brand-dark)" }}>
+                      Login
+                    </Link>
+                    <Link to="/login" onClick={() => { setMenuOpen(false); }}
+                      className="flex px-4 py-2.5 text-sm transition-colors hover:bg-accent"
+                      style={{ color: "var(--foreground)" }}>
+                      Sign Up
+                    </Link>
+                    <div className="my-1 border-t" style={{ borderColor: "var(--border)" }} />
+                    <Link to="/become-a-host" onClick={() => setMenuOpen(false)}
+                      className="flex px-4 py-2.5 text-sm transition-colors hover:bg-accent"
+                      style={{ color: "var(--foreground)" }}>
+                      Become a Host
+                    </Link>
+                    <a href="#" className="flex px-4 py-2.5 text-sm transition-colors hover:bg-accent" style={{ color: "var(--foreground)" }}>Help Centre</a>
+                    <div className="my-1 border-t" style={{ borderColor: "var(--border)" }} />
+                    <Link to="/admin-login" onClick={() => setMenuOpen(false)}
+                      className="flex px-4 py-2 text-xs transition-colors hover:bg-accent"
+                      style={{ color: "var(--muted-foreground)" }}>
+                      Admin / Staff access →
+                    </Link>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </motion.nav>
-  )
+    </header>
+  );
 }
 
 export default Navbar

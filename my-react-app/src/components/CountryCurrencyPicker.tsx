@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { ChevronDown, Search, Check, MapPin } from "lucide-react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { worldCountries } from "../data/worldCountries";
 
 type Country = typeof worldCountries[0];
@@ -53,41 +53,32 @@ export function CountryCurrencyPicker({ onSelect }: CountryCurrencyPickerProps) 
 
   return (
     <div ref={ref} className="relative hidden md:block">
-      {/* ── Trigger button — flag + name always visible ── */}
       <button
         onClick={() => setOpen(v => !v)}
         className="flex items-center gap-2 px-3 py-2 rounded-full transition-colors hover:bg-accent"
         style={{ border: "1px solid var(--border)", backgroundColor: "white" }}
       >
-        {/* Flag — always shown, prominent */}
         <span className="text-xl leading-none" title={selected.name}>{selected.flag}</span>
-
-        {/* Country name or code depending on space */}
         <span className="hidden xl:inline text-sm font-medium max-w-[100px] truncate" style={{ color: "var(--foreground)" }}>
           {selected.name}
         </span>
         <span className="hidden lg:inline xl:hidden text-sm font-medium" style={{ color: "var(--foreground)" }}>
           {selected.code}
         </span>
-
-        {/* Currency code */}
         <span className="text-xs hidden lg:inline" style={{ color: "var(--muted-foreground)" }}>
           {selected.symbol}
         </span>
-
         <ChevronDown size={13} className={`transition-transform duration-200 shrink-0 ${open ? "rotate-180" : ""}`} style={{ color: "var(--muted-foreground)" }} />
       </button>
 
-      {/* ── Dropdown ── */}
       {open && (
         <div
           className="absolute top-full right-0 mt-2 bg-white rounded-2xl shadow-2xl border overflow-hidden z-50"
           style={{ width: "420px", borderColor: "var(--border)" }}
         >
-          {/* Header */}
           <div className="px-4 pt-4 pb-3 border-b" style={{ borderColor: "var(--border)" }}>
             <p className="text-xs font-bold uppercase tracking-wider mb-2.5" style={{ color: "var(--muted-foreground)" }}>
-              🌍 Country, Currency &amp; Popular Places
+              🌍 Country, Currency & Popular Places
             </p>
             <div className="flex items-center gap-2 px-3 py-2.5 rounded-xl" style={{ backgroundColor: "var(--muted)" }}>
               <Search size={14} style={{ color: "var(--muted-foreground)", flexShrink: 0 }} />
@@ -106,7 +97,6 @@ export function CountryCurrencyPicker({ onSelect }: CountryCurrencyPickerProps) 
             </p>
           </div>
 
-          {/* Selected country highlight */}
           {!query && (
             <div className="px-4 py-3 flex items-center gap-3 border-b" style={{ borderColor: "var(--border)", backgroundColor: "var(--accent)" }}>
               <span className="text-2xl leading-none">{selected.flag}</span>
@@ -120,7 +110,6 @@ export function CountryCurrencyPicker({ onSelect }: CountryCurrencyPickerProps) 
             </div>
           )}
 
-          {/* Country list */}
           <ul className="overflow-y-auto py-1" style={{ maxHeight: "380px", scrollbarWidth: "thin" }}>
             {filtered.length === 0 ? (
               <li className="px-4 py-8 text-center text-sm" style={{ color: "var(--muted-foreground)" }}>No results found</li>
@@ -132,7 +121,6 @@ export function CountryCurrencyPicker({ onSelect }: CountryCurrencyPickerProps) 
 
                 return (
                   <li key={c.code} className="border-b last:border-b-0" style={{ borderColor: "rgba(0,0,0,0.05)" }}>
-                    {/* Country row */}
                     <div
                       className="flex items-center gap-3 px-4 py-3 transition-colors cursor-pointer group"
                       style={{ backgroundColor: isSelected ? "var(--accent)" : "transparent" }}
@@ -140,16 +128,13 @@ export function CountryCurrencyPicker({ onSelect }: CountryCurrencyPickerProps) 
                       onMouseLeave={e => { if (!isSelected) e.currentTarget.style.backgroundColor = "transparent"; }}
                       onClick={() => chooseCountry(c)}
                     >
-                      {/* Flag — prominent */}
                       <span className="text-2xl leading-none shrink-0">{c.flag}</span>
-
                       <div className="min-w-0 flex-1">
                         <p className="text-sm font-semibold truncate" style={{ color: "var(--foreground)" }}>{c.name}</p>
                         <p className="text-xs" style={{ color: "var(--muted-foreground)" }}>
                           {c.currency} · {c.symbol} · {c.continent}
                         </p>
                       </div>
-
                       <div className="flex items-center gap-1.5 shrink-0">
                         {isSelected && <Check size={13} style={{ color: "var(--primary)" }} />}
                         <button
@@ -162,7 +147,6 @@ export function CountryCurrencyPicker({ onSelect }: CountryCurrencyPickerProps) 
                       </div>
                     </div>
 
-                    {/* Cities */}
                     {(isExpanded || matchingCities.length > 0) && (
                       <div className="px-4 pb-3 pt-1" style={{ backgroundColor: "rgba(235,245,251,0.5)" }}>
                         <p className="text-xs font-semibold uppercase tracking-wide mb-2 flex items-center gap-1" style={{ color: "var(--muted-foreground)" }}>
@@ -196,7 +180,6 @@ export function CountryCurrencyPicker({ onSelect }: CountryCurrencyPickerProps) 
             )}
           </ul>
 
-          {/* Footer */}
           <div className="border-t px-4 py-3 flex items-center justify-between" style={{ borderColor: "var(--border)", backgroundColor: "var(--secondary)" }}>
             <div className="flex items-center gap-2">
               <span className="text-lg">{selected.flag}</span>
