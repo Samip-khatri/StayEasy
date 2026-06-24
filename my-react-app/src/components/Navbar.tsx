@@ -7,8 +7,6 @@ function Navbar() {
   const { pathname } = useLocation()
   const navigate = useNavigate()
   const { user, logout } = useAuth()
-
-  if (pathname === '/become-a-host') return null
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
@@ -21,6 +19,8 @@ function Navbar() {
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
+
+  if (pathname === '/become-a-host') return null
 
   const handleLogout = () => {
     logout()

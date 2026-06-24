@@ -67,8 +67,7 @@ function HostLandingPage() {
               </div>
             </div>
 
-            {/* LISTING CARD + SEAL */}
-            <div className="relative flex items-center justify-center min-h-[380px]">
+           <div className="relative flex items-center justify-center min-h-[380px]">
               <div className="bg-white text-charcoal w-[300px] rounded-[4px] rotate-[4deg] shadow-[0_30px_60px_-20px_rgba(28,27,25,0.45)] relative z-10 max-lg:rotate-0">
                 <div
                   className="h-[190px] relative"
@@ -115,7 +114,6 @@ function HostLandingPage() {
         </div>
       </section>
 
-      {/* MARQUEE STRIP */}
       <div className="border-t border-b border-gray-200 bg-gray-50 py-3.5 overflow-hidden">
         <div className="flex gap-12 whitespace-nowrap w-max animate-[scroll-strip_28s_linear_infinite] will-change-transform">
           {[
@@ -145,7 +143,6 @@ function HostLandingPage() {
         </div>
       </div>
 
-      {/* WHY CHOOSE */}
       <section className="py-36 bg-gradient-to-b from-white via-blue-50/30 to-white relative">
         <div className="max-w-[1180px] mx-auto px-8">
           <div className="max-w-[700px] mx-auto text-center mb-16">
@@ -182,7 +179,6 @@ function HostLandingPage() {
         </div>
       </section>
 
-      {/* HOW IT WORKS (LEDGER) */}
       <section className="bg-primary text-white py-24">
         <div className="max-w-[1180px] mx-auto px-8">
           <div className="max-w-[560px] mb-14">
@@ -210,7 +206,6 @@ function HostLandingPage() {
         </div>
       </section>
 
-      {/* FAQ */}
       <section className="bg-white py-24">
         <div className="max-w-[1180px] mx-auto px-8">
           <div className="max-w-[560px] mb-14">
