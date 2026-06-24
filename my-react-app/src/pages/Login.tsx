@@ -33,7 +33,7 @@ export default function Login() {
         headers: { 'Content-Type': 'multipart/form-data' },
       })
       localStorage.setItem('token', res.data.access_token)
-      setTimeout(() => navigate(isHost ? '/become-a-host' : '/'), 1700)
+      setTimeout(() => navigate(isHost ? '/host/portal' : '/'), 1700)
     } catch {
       setError('Invalid email or password.')
       setLoginClicked(false) // let him walk back out if login failed

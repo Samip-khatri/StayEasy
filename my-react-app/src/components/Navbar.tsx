@@ -20,7 +20,7 @@ function Navbar() {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
-  if (pathname === '/become-a-host') return null
+  if (pathname === '/become-a-host' || pathname === '/host/portal') return null
 
   const handleLogout = () => {
     logout()

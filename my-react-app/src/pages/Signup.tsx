@@ -26,7 +26,7 @@ export default function Signup() {
         email,
         password,
       })
-      navigate(isHost ? '/become-a-host' : '/login')
+      navigate(isHost ? '/host/portal' : '/login')
     } catch {
       setError('Could not create account. Please check your details and try again.')
     } finally {
