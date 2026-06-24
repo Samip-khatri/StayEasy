@@ -55,7 +55,7 @@ export function Navbar() {
           <CountryCurrencyPicker />
 
           <Link
-            to="/become-a-host"
+            to="/host"
             className="hidden md:block px-4 py-2 text-sm font-medium rounded-full transition-colors hover:bg-accent whitespace-nowrap"
             style={{ color: "var(--foreground)" }}
           >
@@ -158,7 +158,7 @@ export function Navbar() {
                       Sign Up
                     </Link>
                     <div className="my-1 border-t" style={{ borderColor: "var(--border)" }} />
-                    <Link to="/become-a-host" onClick={() => setMenuOpen(false)}
+                    <Link to="/host" onClick={() => setMenuOpen(false)}
                       className="flex px-4 py-2.5 text-sm transition-colors hover:bg-accent"
                       style={{ color: "var(--foreground)" }}>
                       Become a Host

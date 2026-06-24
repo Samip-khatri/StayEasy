@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { ChevronRight, Star, Shield, Globe } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Navbar } from "../components/Navbar";
 import { HeroSection } from "../components/HeroSection";
 import { CategoryFilter } from "../components/CategoryFilter";
 import { HotelCard } from "../components/HotelCard";
@@ -28,7 +27,6 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: "var(--background)", fontFamily: "'Inter', sans-serif" }}>
-      <Navbar />
       <HeroSection />
       <CategoryFilter selected={activeCategory} onChange={setActiveCategory} />
 
@@ -98,7 +96,7 @@ export default function LandingPage() {
             <p className="text-sm mt-3 mb-6 leading-relaxed" style={{ color: "rgba(235,245,251,0.82)" }}>
               Join thousands of hosts earning extra income by sharing their spaces with travellers around the world.
             </p>
-            <Link to="/become-a-host" className="inline-block bg-white text-sm font-semibold px-6 py-3 rounded-xl hover:shadow-lg transition-all" style={{ color: "var(--brand-dark)" }}>
+            <Link to="/host" className="inline-block bg-white text-sm font-semibold px-6 py-3 rounded-xl hover:shadow-lg transition-all" style={{ color: "var(--brand-dark)" }}>
               Learn more about hosting
             </Link>
           </div>

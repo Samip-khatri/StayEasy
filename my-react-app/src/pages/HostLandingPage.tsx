@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import Footer from '../components/Footer'
+import { Footer } from '../components/Footer'
 
 const faqData = [
   {
@@ -58,7 +58,7 @@ function HostLandingPage() {
               </p>
               <div className="flex items-center gap-5 flex-wrap">
                 <button
-                  onClick={() => navigate('/signup?host=true')}
+                  onClick={() => navigate('/login?host=true')}
                   className="bg-accent hover:bg-[#247a97] text-white px-8 py-4 rounded-full font-semibold text-[15px] border-none cursor-pointer inline-flex items-center gap-2.5 transition-all duration-200 hover:-translate-y-0.5"
                 >
                   List your space <span className="inline-block">→</span>
@@ -99,7 +99,6 @@ function HostLandingPage() {
                 </div>
               </div>
 
-              {/* SEAL */}
               <div className="absolute -right-1.5 -top-7 w-32 h-32 z-20 -rotate-12 max-lg:hidden">
                 <svg viewBox="0 0 140 140" className="w-full h-full">
                   <circle cx="70" cy="70" r="66" fill="none" stroke="#C45B3E" strokeWidth="2" />
@@ -241,7 +240,7 @@ function HostLandingPage() {
             Your first guest is closer than you think.
           </h2>
           <button
-            onClick={() => navigate('/signup?host=true')}
+            onClick={() => navigate('/login?host=true')}
             className="bg-white text-primary px-8 py-4 rounded-full font-semibold text-[15px] border-none cursor-pointer inline-flex relative z-10 transition-all duration-200 hover:-translate-y-0.5 items-center gap-2.5"
           >
             List your space <span className="inline-block">→</span>
