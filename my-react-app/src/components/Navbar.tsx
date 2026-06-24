@@ -3,7 +3,7 @@ import { useNavigate, Link, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useAuth } from '../context/AuthContext'
 
-function Navbar() {
+export function Navbar() {
   const { pathname } = useLocation()
   const navigate = useNavigate()
   const { user, logout } = useAuth()

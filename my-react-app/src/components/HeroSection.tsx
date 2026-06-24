@@ -1,65 +1,54 @@
-import { useState } from 'react'
-import { motion } from 'framer-motion'
-import SearchCard from './SearchCard'
+import { SearchBar } from "./SearchBar";
 
-function HeroSection() {
-  const [activeTab, setActiveTab] = useState<'stays' | 'experiences'>('stays')
-
+export function HeroSection() {
   return (
-    <section className="relative w-full h-[80vh] min-h-[500px] flex flex-col items-center justify-center overflow-hidden">
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{
-          backgroundImage: "url('https://images.travelandleisureasia.com/wp-content/uploads/sites/3/2023/12/29122005/yak.jpeg')",
-        }}
-      />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/50" />
+    <section
+      className="relative min-h-[540px] flex items-center justify-center overflow-hidden"
+      style={{
+        backgroundImage: `linear-gradient(rgba(26,60,94,0.55), rgba(26,60,94,0.72)), url('https://images.unsplash.com/photo-1605538108568-7f0d77a214c1?w=1600&h=700&fit=crop&auto=format')`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      <div className="absolute inset-0 opacity-10" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0)", backgroundSize: "32px 32px" }} />
 
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.2 }}
-        className="relative z-10 flex flex-col items-center text-center px-4 mt-[-60px]"
-      >
-        <h1
-          className="text-white text-5xl md:text-6xl lg:text-7xl font-bold mb-4"
-          style={{ fontFamily: "'Playfair Display', serif" }}
-        >
-          Find your perfect stay
-        </h1>
-        <p className="text-white/80 text-lg md:text-xl max-w-2xl mb-8">
-          Discover hotels, villas & unique accommodations around the world
-        </p>
-
-        <div className="flex items-center gap-2 mb-10">
-          <button
-            onClick={() => setActiveTab('stays')}
-            className={`px-6 py-2.5 rounded-full text-sm font-medium transition-colors ${
-              activeTab === 'stays'
-                ? 'bg-white text-gray-900 shadow-md'
-                : 'bg-white/20 text-white hover:bg-white/30'
-            }`}
+      <div className="relative z-10 w-full max-w-[1280px] mx-auto px-6 flex flex-col items-center text-center gap-8 py-20">
+        <div className="flex flex-col items-center gap-4">
+          <span
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest"
+            style={{ backgroundColor: "rgba(46,134,171,0.3)", color: "#EBF5FB", border: "1px solid rgba(46,134,171,0.5)" }}
           >
-            Stays
-          </button>
-          <button
-            onClick={() => setActiveTab('experiences')}
-            className={`px-6 py-2.5 rounded-full text-sm font-medium transition-colors ${
-              activeTab === 'experiences'
-                ? 'bg-white text-gray-900 shadow-md'
-                : 'bg-white/20 text-white hover:bg-white/30'
-            }`}
+            ✦ Discover your perfect stay
+          </span>
+          <h1
+            style={{
+              fontFamily: "'Sora', 'Inter', sans-serif",
+              fontWeight: 800,
+              fontSize: "clamp(2rem, 5vw, 3.5rem)",
+              color: "white",
+              lineHeight: 1.1,
+              letterSpacing: "-0.5px",
+            }}
           >
-            Experiences
-          </button>
+            Find & Book<br />
+            <span style={{ color: "#EBF5FB" }}>Extraordinary Hotels</span>
+          </h1>
+          <p style={{ fontSize: "1.0625rem", color: "rgba(235,245,251,0.88)", fontFamily: "'Inter', sans-serif", maxWidth: "500px", lineHeight: 1.6 }}>
+            Hotels, villas & unique stays handpicked across 195+ countries — from Kathmandu to the Maldives.
+          </p>
         </div>
-
         <div className="w-full max-w-3xl">
-          <SearchCard />
+          <SearchBar />
         </div>
-      </motion.div>
+        <div className="flex flex-wrap items-center justify-center gap-6">
+          {["50,000+ Properties", "195+ Countries", "4.9★ Avg Rating"].map((stat) => (
+            <div key={stat} className="flex items-center gap-2">
+              <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: "#2E86AB" }} />
+              <span style={{ color: "rgba(235,245,251,0.8)", fontSize: "0.8125rem", fontFamily: "'Inter',sans-serif" }}>{stat}</span>
+            </div>
+          ))}
+        </div>
+      </div>
     </section>
-  )
+  );
 }
-
-export default HeroSection
