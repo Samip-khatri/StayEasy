@@ -6,7 +6,7 @@ interface AuthContextValue {
   user: User | null
   token: string | null
   loading: boolean
-  login: (token: string) => Promise<void>
+  login: (accessToken: string, refreshToken?: string) => Promise<void>
   logout: () => void
 }
 
@@ -19,7 +19,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const fetchUser = async (authToken: string) => {
     try {
-      const { data } = await api.get<User>('/v1/api/me', {
+      const { data } = await api.get<User>('/auth/users/me', {
         headers: { Authorization: `Bearer ${authToken}` }
       })
       setUser(data)
@@ -38,14 +38,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, [token])
 
-  const login = async (newToken: string) => {
-    localStorage.setItem('token', newToken)
-    setToken(newToken)
-    await fetchUser(newToken)
+  const login = async (accessToken: string, refreshToken?: string) => {
+    localStorage.setItem('token', accessToken)
+    if (refreshToken) localStorage.setItem('refresh_token', refreshToken)
+    setToken(accessToken)
+    await fetchUser(accessToken)
   }
 
   const logout = () => {
     localStorage.removeItem('token')
+    localStorage.removeItem('refresh_token')
     setToken(null)
     setUser(null)
   }

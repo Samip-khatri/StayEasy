@@ -1,8 +1,10 @@
 export interface User {
-  id?: number
-  first_name: string
-  last_name: string
+  id: string
+  full_name: string
   email: string
+  phone: string
+  role: string
+  created_at: string
 }
 
 export interface AuthState {
@@ -17,9 +19,9 @@ export interface LoginPayload {
 }
 
 export interface SignupPayload {
-  first_name: string
-  last_name: string
+  full_name: string
   email: string
+  phone: string
   password: string
 }
 

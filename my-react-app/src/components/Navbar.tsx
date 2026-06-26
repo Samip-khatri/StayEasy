@@ -7,8 +7,6 @@ function Navbar() {
   const { pathname } = useLocation()
   const navigate = useNavigate()
   const { user, logout } = useAuth()
-
-  if (pathname === '/become-a-host') return null
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
@@ -21,6 +19,8 @@ function Navbar() {
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
+
+  if (pathname === '/become-a-host') return null
 
   const handleLogout = () => {
     logout()
@@ -41,7 +41,7 @@ function Navbar() {
 
       <div className="flex items-center gap-3">
         <select className="text-sm bg-transparent border-none cursor-pointer outline-none text-gray-700">
-          <option>🇮🇳 INR</option>
+          <option>in NPR</option>
         </select>
 
         <Link
@@ -58,7 +58,7 @@ function Navbar() {
           >
             <span>☰</span>
             <span className="w-[30px] h-[30px] rounded-full bg-gray-500 flex items-center justify-center text-white text-base">
-              {user ? user.first_name[0].toUpperCase() : '👤'}
+              {user ? user.full_name[0].toUpperCase() : '👤'}
             </span>
           </button>
 
@@ -67,7 +67,7 @@ function Navbar() {
               {user ? (
                 <>
                   <div className="px-4 py-4 border-b border-gray-200">
-                    <p className="m-0 font-semibold">{user.first_name} {user.last_name}</p>
+                    <p className="m-0 font-semibold">{user.full_name}</p>
                     <p className="m-0 mt-1 text-gray-500 text-xs">{user.email}</p>
                   </div>
                   <div
