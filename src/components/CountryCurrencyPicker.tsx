@@ -9,9 +9,12 @@ interface CountryCurrencyPickerProps {
   onSelect?: (country: Country) => void;
 }
 
+const defaultCountry =
+  worldCountries.find(c => c.code === "NP") ?? worldCountries[0];
+
 export function CountryCurrencyPicker({ onSelect }: CountryCurrencyPickerProps) {
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState<Country>(worldCountries[0]);
+  const [selected, setSelected] = useState<Country>(defaultCountry);
   const [query, setQuery] = useState("");
   const [expandedCode, setExpandedCode] = useState<string | null>(null);
   const ref = useRef<HTMLDivElement>(null);

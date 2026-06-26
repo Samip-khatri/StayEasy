@@ -185,7 +185,7 @@ export default function BecomeAHost() {
       formData.append('rooms', JSON.stringify(rooms))
       photos.forEach((p) => formData.append('photos', p))
 
-      await api.post('/v1/api/properties', formData, {
+      await api.post('/api/v1/properties', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       })
       toast.success('Property listed successfully!')

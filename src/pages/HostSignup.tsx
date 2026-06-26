@@ -29,14 +29,14 @@ export default function HostSignup() {
       const first_name = parts[0] || ''
       const last_name = parts.slice(1).join(' ') || ''
 
-      await api.post('/v1/api/register', {
+      await api.post('/api/v1/auth/users/register', {
         first_name,
         last_name,
         email,
         phone,
         password,
       })
-      await api.post('/v1/api/send-otp', { email })
+      await api.post('/api/v1/auth/users/send-otp', { email })
       setShowOtpStep(true)
       toast.success('Verification code sent to your email')
     } catch {
@@ -50,7 +50,7 @@ export default function HostSignup() {
     setError('')
     setOtpLoading(true)
     try {
-      await api.post('/v1/api/verify-otp', { email, otp })
+      await api.post('/api/v1/auth/users/verify-otp', { email, otp })
       setVerified(true)
       toast.success('Account verified successfully!')
     } catch {

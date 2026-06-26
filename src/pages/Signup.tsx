@@ -20,7 +20,7 @@ export default function Signup() {
     setError('')
     setLoading(true)
     try {
-      await api.post('/v1/api/register', {
+      await api.post('/api/v1/auth/users/register', {
         first_name: firstName,
         last_name: lastName,
         email,
