@@ -27,7 +27,7 @@ export default function HostLogin() {
       const form = new FormData()
       form.append('username', email)
       form.append('password', password)
-      const res = await api.post('/v1/api/login', form, {
+      const res = await api.post('/api/v1/auth/users/login', form, {
         headers: { 'Content-Type': 'multipart/form-data' },
       })
       localStorage.setItem('token', res.data.access_token)
